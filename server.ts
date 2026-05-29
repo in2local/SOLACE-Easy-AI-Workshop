@@ -3,6 +3,21 @@ import path from "path";
 import { GoogleGenAI } from "@google/genai";
 import "dotenv/config";
 
+function stripMarkdownElements(text: string): string {
+  if (!text) return "";
+  return text
+    // Replace markdown headers (e.g., ### Title or # Title)
+    .replace(/^#+\s+/gm, "")
+    // Replace bold/italic symbols (e.g., **word**)
+    .replace(/\*{1,3}/g, "")
+    // Replace underscores styling
+    .replace(/_{1,3}/g, "")
+    // Replace inline code block ticks (e.g., `code`)
+    .replace(/`/g, "")
+    // Replace blockquote markers (e.g., > text) at the start of any line
+    .replace(/^\s*>\s+/gm, "");
+}
+
 async function startServer() {
   const app = express();
   const PORT = 3000;
@@ -257,7 +272,7 @@ To keep your digital identity and data secure in Luxembourg, follow these **3 qu
         textResponse = generateLocalFallbackResponse(prompt, "Model is experiencing high demand (503) or API key is not configured.");
       }
 
-      res.json({ text: textResponse });
+      res.json({ text: stripMarkdownElements(textResponse) });
     } catch (error: any) {
       console.error("Error communicating with Gemini API on backend:", error);
       res.status(500).json({ 

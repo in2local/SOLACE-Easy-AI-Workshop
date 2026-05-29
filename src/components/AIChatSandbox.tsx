@@ -20,12 +20,27 @@ interface PresetPrompt {
   badgeColor: string;
 }
 
+function stripMarkdownElements(text: string): string {
+  if (!text) return "";
+  return text
+    // Replace markdown headers (e.g., ### Title or # Title)
+    .replace(/^#+\s+/gm, "")
+    // Replace bold/italic symbols (e.g., **word**)
+    .replace(/\*{1,3}/g, "")
+    // Replace underscores styling
+    .replace(/_{1,3}/g, "")
+    // Replace inline code block ticks (e.g., `code`)
+    .replace(/`/g, "")
+    // Replace blockquote markers (e.g., > text) at the start of any line
+    .replace(/^\s*>\s+/gm, "");
+}
+
 export default function AIChatSandbox() {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'welcome',
       sender: 'assistant',
-      text: "Moien! I am **Digital Buddha**, your AI safety guide. Choose a demo scenario below to run a simulation, or enter custom queries to test secure Luxembourg compliance prompts.",
+      text: "Moien! I am Digital Buddha, your AI safety guide. Choose a demo scenario below to run a simulation, or enter custom queries to test secure Luxembourg compliance prompts.",
       timestamp: new Date()
     }
   ]);
@@ -478,7 +493,7 @@ To keep your digital identity and data secure in Luxembourg, follow these **3 qu
                     ? 'bg-neutral-50 text-neutral-800 border border-neutral-200/50' 
                     : 'bg-[#129CD5] text-white font-medium'
                 }`}>
-                  {msg.text}
+                  {stripMarkdownElements(msg.text)}
                 </div>
               </div>
             );
