@@ -138,18 +138,26 @@ export default function AIChatSandbox() {
       });
 
       let data: any = null;
+      let errorMsg = "";
       const contentType = response.headers.get('content-type');
+      
       if (contentType && contentType.includes('application/json')) {
         try {
           data = await response.json();
         } catch (jsonErr) {
           console.error('Failed to parse response as JSON:', jsonErr);
         }
+      } else {
+        try {
+          errorMsg = await response.text();
+        } catch (textErr) {
+          // ignore
+        }
       }
 
       if (!response.ok) {
-        const errorMsg = data?.error || data?.message || await response.text() || `HTTP error! Status: ${response.status}`;
-        throw new Error(errorMsg);
+        const finalError = data?.error || data?.message || errorMsg || `HTTP error! Status: ${response.status}`;
+        throw new Error(finalError);
       }
 
       if (!data) {

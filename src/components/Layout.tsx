@@ -128,7 +128,7 @@ export default function Layout({ children, activeTab, setActiveTab, resetLaptopS
           
           <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mt-2">
             <div className="flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-[#FAF7EE]">
-              <span>Made for Luxembourg Diversity</span>
+              <span>Made in Luxembourg</span>
               <div className="flex items-center gap-0.5">
                 <span className="w-3.5 h-2 bg-[#E3232C] rounded-xs inline-block" title="Red"></span>
                 <span className="w-3.5 h-2 bg-white rounded-xs inline-block" title="White"></span>
