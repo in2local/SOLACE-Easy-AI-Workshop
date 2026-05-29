@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { Users, GraduationCap, Briefcase, Glasses, ArrowRight } from 'lucide-react';
 import { AgeGroup } from '../data/content';
 import { cn } from '../lib/utils';
+import AIChatSandbox from './AIChatSandbox';
 
 interface LandingProps {
   onSelectAge: (age: AgeGroup) => void;
@@ -83,7 +84,7 @@ export default function Landing({ onSelectAge }: LandingProps) {
               whileTap={{ scale: 0.98 }}
               onClick={() => onSelectAge(opt.id)}
               className={cn(
-                "flex flex-col items-center bg-white p-6 rounded-3xl shadow-sm border-2 transition-all text-left relative overflow-hidden group cursor-pointer",
+                "flex flex-col items-center bg-white p-5 px-3 sm:px-4 lg:px-2.5 xl:px-5 rounded-3xl shadow-sm border-2 transition-all text-left relative overflow-hidden group cursor-pointer",
                 opt.color, "hover:shadow-lg"
               )}
             >
@@ -93,7 +94,7 @@ export default function Landing({ onSelectAge }: LandingProps) {
                 {opt.icon}
               </div>
               
-              <h3 className="text-lg font-bold text-[#4A4036] mb-1.5 w-full text-center z-10">{opt.label}</h3>
+              <h3 className="text-xs sm:text-[14px] md:text-[15px] lg:text-[13px] xl:text-[15.5px] 2xl:text-base font-bold tracking-tight text-[#4A4036] mb-1.5 w-full text-center z-10 whitespace-nowrap">{opt.label}</h3>
               <p className="text-[10px] font-bold uppercase tracking-widest text-[#887868] bg-[#FAF7EE] px-3 py-1 rounded-full text-center mb-4 border border-[#E8E1D5]/60 z-10">
                 {opt.targetText}
               </p>
@@ -103,12 +104,15 @@ export default function Landing({ onSelectAge }: LandingProps) {
               </p>
 
               <span className="text-xs font-bold text-gray-500 group-hover:text-gray-900 transition-colors flex items-center gap-1.5 mt-auto z-10 group-hover:translate-x-1.5 transition-transform duration-200">
-                Play Laptop Scenarios <ArrowRight className="w-3.5 h-3.5" />
+                Play This Scenario <ArrowRight className="w-3.5 h-3.5" />
               </span>
             </motion.button>
           ))}
         </div>
       </div>
+
+      {/* Live AI Interactive Prompt Sandbox */}
+      <AIChatSandbox />
     </div>
   );
 }

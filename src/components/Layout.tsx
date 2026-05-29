@@ -51,11 +51,11 @@ export default function Layout({ children, activeTab, setActiveTab, resetLaptopS
                   <span className="text-[#74345E]">E</span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-bold text-[#887868] text-sm sm:text-lg leading-tight">Digital Demo AI & Civic Security</span>
+                  <span className="font-bold text-[#887868] text-sm sm:text-lg leading-tight">Digital Democracy</span>
                 </div>
               </div>
               <span className="text-[9px] sm:text-[10px] text-[#A69B8F] uppercase tracking-widest mt-0.5 font-semibold">
-                Stories of Local Active Citizen Engagement • Luxembourg
+                Stories of Local Active Citizen Engagement
               </span>
             </div>
 
