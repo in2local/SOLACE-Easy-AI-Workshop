@@ -25,13 +25,12 @@ export default function AIChatSandbox() {
     {
       id: 'welcome',
       sender: 'assistant',
-      text: "Moien! I am your SOLACE Digital AI Mentor. 🚀\n\nThis is a live, secure playground powered by **Gemini 3.5 Flash** on our server. Try clicking any of the safety-categorized scenarios above to see how a state-of-the-art AI model processes it, or type your own question below!\n\n*(Remember: In line with Luxembourg policy and GDPR rules, never input your actual credentials, passwords, or personal social IDs into public chatbots!)*",
+      text: "Moien! I am **Digital Buddha**, your AI safety guide. Choose a demo scenario below to run a simulation, or enter custom queries to test secure Luxembourg compliance prompts.",
       timestamp: new Date()
     }
   ]);
   const [inputPrompt, setInputPrompt] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [activeCategory, setActiveCategory] = useState<'all' | 'explorers' | 'citizens' | 'professionals' | 'seniors'>('all');
   const [selectedPreset, setSelectedPreset] = useState<PresetPrompt | null>(null);
   
   const chatEndRef = useRef<HTMLDivElement>(null);
@@ -98,10 +97,6 @@ export default function AIChatSandbox() {
       badgeColor: 'bg-[#188C7C]/10 text-[#188C7C] border-[#188C7C]/20'
     }
   ];
-
-  const filteredPresets = activeCategory === 'all' 
-    ? presets 
-    : presets.filter(p => p.category === activeCategory);
 
   const handleSelectPreset = (preset: PresetPrompt) => {
     setSelectedPreset(preset);
@@ -351,148 +346,87 @@ While the servers clear up, here are **3 quick general guidelines** to keep your
   }, [messages, isLoading]);
 
   return (
-    <div id="ai-chat-sandbox-root" className="w-full bg-[#FAF7EE] border-2 border-[#E8E1D5] rounded-3xl p-4 sm:p-6 shadow-sm overflow-hidden mt-12 mb-6">
+    <div id="ai-chat-sandbox-root" className="w-full bg-[#FAF7EE] border-2 border-[#E8E1D5] rounded-3xl p-4 sm:p-5 shadow-sm overflow-hidden mt-6 mb-6">
       
       {/* Header and explanation */}
-      <div className="border-b border-[#E8E1D5] pb-5 mb-6">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="p-3 bg-gradient-to-br from-[#129CD5] to-[#188C7C] rounded-2xl text-white shadow-md">
-              <Sparkles className="w-6 h-6 animate-pulse" />
-            </div>
-            <div>
-              <span className="text-[10px] uppercase font-extrabold tracking-widest text-[#188C7C] bg-[#188C7C]/10 px-2.5 py-1 rounded-full">
-                🔒 LIVE SECURE EXPERIMENT
-              </span>
-              <h2 className="text-xl sm:text-2xl font-extrabold text-[#4A4036] tracking-tight mt-1">
-                SOLACE Digital AI Chat-Sandbox
-              </h2>
-            </div>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-4 mb-4 border-b border-[#E8E1D5]/60 gap-3">
+        <div className="flex items-center gap-2.5">
+          <div className="p-2 bg-[#188C7C] rounded-xl text-white">
+            <Sparkles className="w-5 h-5" />
           </div>
-          <div className="flex items-center gap-1.5 self-start sm:self-center text-xs text-[#887868] bg-white border border-[#E8E1D5] px-3.5 py-2 rounded-xl">
-            <Lock className="w-3.5 h-3.5 text-emerald-600" />
-            <span>Secure Server Proxy. Matrikkel Censors Enabled.</span>
+          <div>
+            <h2 className="text-lg font-black text-[#4A4036] tracking-tight">
+              Digital Buddha
+            </h2>
+            <p className="text-[#887868] text-[11px]">
+              AI Safety Playground & Privacy Mentor
+            </p>
           </div>
         </div>
-        <p className="text-[#887868] text-xs sm:text-sm mt-3 leading-relaxed">
-          How do real AI systems process your study helpers or translation work? Why do clean prompts protect you, while leaking identifiers is dangerous? Try the safety-graded prompt examples below or formulate your own to see how **Gemini AI** responds live!
-        </p>
+        <div className="flex items-center gap-1.5 text-[10px] text-[#188C7C] bg-[#188C7C]/5 border border-[#188C7C]/20 px-2.5 py-1 rounded-full self-start sm:self-auto font-mono">
+          <Lock className="w-3 h-3 text-[#188C7C] shrink-0" />
+          <span>Matrikkel Censors Enabled</span>
+        </div>
       </div>
 
-      {/* Preset categorizer and Selector Grid */}
-      <div className="mb-6">
-        <div className="flex flex-col gap-3">
-          <div className="flex items-center justify-between">
-            <label className="text-xs font-black uppercase tracking-wider text-[#4A4036]">
-              Step 1: Test Scenario Presets
-            </label>
-            <span className="text-[10px] text-gray-500 font-mono">Select to analyze safety</span>
-          </div>
+      {/* Dynamic Scenario Suggestion Pills */}
+      <div className="mb-4">
+        <span className="block text-[10px] font-black uppercase tracking-wider text-[#cf9c63] mb-2">
+          Select Simulation Scenario
+        </span>
+        <div className="flex flex-wrap gap-1.5">
+          {presets.map(preset => {
+            const isSelected = selectedPreset?.id === preset.id;
+            let bullet = '🟢';
+            if (preset.safetyType === 'unsafe') bullet = '🔴';
+            if (preset.safetyType === 'caution') bullet = '🟡';
 
-          {/* Age-Group Pill Filters */}
-          <div className="flex flex-wrap gap-1.5 border-b border-[#E8E1D5]/60 pb-3">
-            {[
-              { id: 'all', label: 'All Cases' },
-              { id: 'explorers', label: 'Youth Explorers' },
-              { id: 'citizens', label: 'Digital Citizens' },
-              { id: 'professionals', label: 'Professionals' },
-              { id: 'seniors', label: 'Senior Guardians' }
-            ].map(tab => (
+            return (
               <button
-                key={tab.id}
-                onClick={() => {
-                  setActiveCategory(tab.id as any);
-                  setSelectedPreset(null);
-                }}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                  activeCategory === tab.id 
-                    ? 'bg-[#4A4036] text-white shadow-xs' 
-                    : 'bg-white text-[#887868] hover:bg-gray-100 border border-gray-200'
+                key={preset.id}
+                onClick={() => handleSelectPreset(preset)}
+                className={`px-3 py-1.5 text-xs rounded-xl border transition-all cursor-pointer flex items-center gap-1.5 ${
+                  isSelected
+                    ? 'bg-[#188C7C] border-[#188C7C] text-white font-semibold'
+                    : 'bg-white border-gray-200 text-gray-600 hover:border-gray-300'
                 }`}
               >
-                {tab.label}
+                <span>{bullet}</span>
+                <span>{preset.title.replace(/^[^a-zA-Z\d\s🇱🇺📞📝🌐🚫💼]+/, '').trim()}</span>
               </button>
-            ))}
-          </div>
-
-          {/* Preset Buttons Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5">
-            {filteredPresets.map(preset => {
-              const isSelected = selectedPreset?.id === preset.id;
-              let indicatorColor = 'bg-gray-300';
-              if (preset.safetyType === 'safe') indicatorColor = 'bg-emerald-500';
-              if (preset.safetyType === 'unsafe') indicatorColor = 'bg-red-500';
-              if (preset.safetyType === 'caution') indicatorColor = 'bg-amber-500';
-
-              return (
-                <button
-                  key={preset.id}
-                  onClick={() => handleSelectPreset(preset)}
-                  className={`p-3 rounded-xl border-2 text-left transition-all flex flex-col justify-between cursor-pointer hover:shadow-xs ${
-                    isSelected 
-                      ? 'border-[#129CD5] bg-white ring-2 ring-[#129CD5]/15' 
-                      : 'border-gray-200 bg-white hover:border-gray-400'
-                  }`}
-                >
-                  <div className="flex items-start gap-2 justify-between w-full mb-1">
-                    <span className="text-xs font-bold text-[#4A4036] leading-tight">
-                      {preset.title}
-                    </span>
-                    <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${indicatorColor}`} title={preset.safetyRating}></span>
-                  </div>
-                  <p className="text-[10px] text-gray-500 line-clamp-2 hover:line-clamp-none transition-all leading-normal">
-                    {preset.prompt}
-                  </p>
-                </button>
-              );
-            })}
-          </div>
+            );
+          })}
         </div>
       </div>
 
-      {/* Selected Preset Safety Diagnostics panel */}
+      {/* Selected Preset Info */}
       {selectedPreset && (
         <motion.div
-          initial={{ opacity: 0, y: -10 }}
+          initial={{ opacity: 0, y: -5 }}
           animate={{ opacity: 1, y: 0 }}
-          className={`p-4 rounded-2xl border-2 mb-6 ${
-            selectedPreset.safetyType === 'safe' 
-              ? 'bg-emerald-500/5 border-emerald-500/20 text-[#106659]' 
-              : selectedPreset.safetyType === 'unsafe' 
-                ? 'bg-red-500/5 border-red-500/20 text-red-900' 
-                : 'bg-amber-500/5 border-amber-500/20 text-amber-900'
-          }`}
+          className="p-3 bg-white border border-gray-200/80 rounded-2xl mb-4 text-xs flex items-start gap-2.5"
         >
-          <div className="flex items-start gap-3">
-            <div className="mt-0.5">
-              {selectedPreset.safetyType === 'safe' ? (
-                <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
-              ) : (
-                <ShieldAlert className="w-5 h-5 text-red-600 shrink-0" />
-              )}
+          <div className="mt-0.5 shrink-0">
+            {selectedPreset.safetyType === 'safe' ? (
+              <ShieldCheck className="w-4 h-4 text-emerald-600" />
+            ) : (
+              <ShieldAlert className="w-4 h-4 text-amber-500" />
+            )}
+          </div>
+          <div className="flex-1">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="font-bold text-[#4A4036]">{selectedPreset.safetyRating}</span>
+              <span className="text-[10px] opacity-65">({selectedPreset.category})</span>
             </div>
-            <div className="flex-1">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5">
-                <h4 className="font-extrabold text-xs uppercase tracking-wider">
-                  SOLACE Prompt Evaluation:
-                </h4>
-                <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-md border self-start ${selectedPreset.badgeColor}`}>
-                  {selectedPreset.safetyRating}
-                </span>
-              </div>
-              <p className="text-xs text-gray-700 leading-relaxed mt-1.5">
-                {selectedPreset.safetyDescription}
-              </p>
-              <div className="mt-3">
-                <button
-                  onClick={() => executePrompt(selectedPreset.prompt)}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#4A4036] hover:bg-[#584D42] text-white text-[10px] font-extrabold uppercase tracking-widest rounded-lg shadow-xs transition-colors cursor-pointer"
-                >
-                  <Play className="w-3 h-3 fill-current" />
-                  <span>Run This Prompt Live!</span>
-                </button>
-              </div>
-            </div>
+            <p className="text-gray-500 text-[11px] leading-relaxed mt-0.5">
+              {selectedPreset.safetyDescription} 
+              <button 
+                onClick={() => executePrompt(selectedPreset.prompt)} 
+                className="text-[#129CD5] hover:underline font-bold inline-block ml-1.5 cursor-pointer font-sans"
+              >
+                Run prompt live →
+              </button>
+            </p>
           </div>
         </motion.div>
       )}
@@ -501,27 +435,24 @@ While the servers clear up, here are **3 quick general guidelines** to keep your
       <div className="flex flex-col bg-white border-2 border-gray-200 rounded-2xl overflow-hidden shadow-xs h-[380px]">
         
         {/* Chat window Header bar */}
-        <div className="bg-gray-50 border-b border-gray-100 p-3 flex items-center justify-between text-xs font-bold text-gray-600">
-          <div className="flex items-center gap-2">
-            <Bot className="w-4 h-4 text-[#188C7C]" />
-            <span>SOLACE AI Sandbox Engine</span>
-          </div>
+        <div className="bg-gray-50 border-b border-gray-100 p-2.5 flex items-center justify-between text-xs text-gray-500">
+          <span className="font-semibold text-gray-400">Secure Session</span>
           <button
             onClick={() => {
               setMessages([
                 {
                   id: 'welcome',
                   sender: 'assistant',
-                  text: "Moien! I am your SOLACE Digital AI Mentor. Let's practice prompting live! Select an example prompt or type any query in Luxembourg security context.",
+                  text: "Moien! Let's test smart AI behaviors. Select any scenario above, or submit custom prompts.",
                   timestamp: new Date()
                 }
               ]);
               setSelectedPreset(null);
             }}
-            className="text-gray-400 hover:text-gray-700 transition-colors flex items-center gap-1 cursor-pointer font-mono text-[9px] font-bold uppercase"
+            className="text-gray-400 hover:text-[#E3232C] transition-colors flex items-center gap-1 cursor-pointer text-[10px] font-bold"
           >
             <RefreshCw className="w-3 h-3" />
-            <span>Reset Tutor</span>
+            <span>Reset Session</span>
           </button>
         </div>
 
@@ -537,17 +468,17 @@ While the servers clear up, here are **3 quick general guidelines** to keep your
                 }`}
               >
                 {/* Sender icon */}
-                <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 text-xs font-bold ${
+                <div className={`w-6 h-6 rounded-lg flex items-center justify-center shrink-0 text-[10px] font-bold ${
                   isAI ? 'bg-[#188C7C]/10 text-[#188C7C]' : 'bg-[#129CD5]/10 text-[#129CD5]'
                 }`}>
-                  {isAI ? <Bot className="w-4 h-4" /> : <User className="w-4 h-4" />}
+                  {isAI ? <Bot className="w-3.5 h-3.5" /> : <User className="w-3.5 h-3.5" />}
                 </div>
 
                 {/* Message Bubble */}
-                <div className={`p-3 rounded-xl shadow-xs text-xs sm:text-[13px] leading-relaxed whitespace-pre-line ${
+                <div className={`p-2.5 rounded-xl text-xs sm:text-[13px] leading-relaxed whitespace-pre-line ${
                   isAI 
-                    ? 'bg-neutral-50 text-neutral-800 border border-neutral-200/60' 
-                    : 'bg-[#129CD5] text-white'
+                    ? 'bg-neutral-50 text-neutral-800 border border-neutral-200/50' 
+                    : 'bg-[#129CD5] text-white font-medium'
                 }`}>
                   {msg.text}
                 </div>
@@ -557,12 +488,12 @@ While the servers clear up, here are **3 quick general guidelines** to keep your
 
           {/* Loading Indicator */}
           {isLoading && (
-            <div className="flex gap-2.5 items-start mr-auto max-w-[70%]">
-              <div className="w-7 h-7 rounded-lg bg-[#188C7C]/10 text-[#188C7C] flex items-center justify-center shrink-0">
+            <div className="flex gap-2 items-start mr-auto max-w-[70%]">
+              <div className="w-6 h-6 rounded-lg bg-[#188C7C]/10 text-[#188C7C] flex items-center justify-center shrink-0">
                 <SpinnerIcon />
               </div>
-              <div className="p-3 bg-neutral-50 rounded-xl border border-neutral-200/60 text-xs text-gray-500 font-medium italic flex items-center gap-2">
-                <span>Analyzing prompt with Gemini 3.5-Flash on server...</span>
+              <div className="p-2.5 bg-neutral-50 rounded-xl border border-neutral-200/50 text-xs text-gray-400 font-medium italic">
+                <span>Thinking...</span>
               </div>
             </div>
           )}
@@ -570,7 +501,7 @@ While the servers clear up, here are **3 quick general guidelines** to keep your
         </div>
 
         {/* Prompt Input Form */}
-        <form onSubmit={handleFormSubmit} className="bg-white border-t border-gray-100 p-2.5 flex items-center gap-2">
+        <form onSubmit={handleFormSubmit} className="bg-white border-t border-gray-100 p-2 flex items-center gap-2">
           <textarea
             value={inputPrompt}
             onChange={(e) => setInputPrompt(e.target.value)}
@@ -580,27 +511,26 @@ While the servers clear up, here are **3 quick general guidelines** to keep your
                 executePrompt(inputPrompt);
               }
             }}
-            placeholder="Type your own custom research prompt or security question..."
+            placeholder="Type your prompt or safety query..."
             rows={1}
-            className="flex-1 bg-gray-50 border border-gray-200 rounded-xl p-2.5 text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#129CD5]/30 resize-none min-h-[38px] max-h-[80px]"
+            className="flex-1 bg-gray-50 border border-gray-100 rounded-xl p-2 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#129CD5]/30 resize-none min-h-[36px]"
           />
           <button
             type="submit"
             disabled={!inputPrompt.trim() || isLoading}
-            className={`p-2.5 rounded-xl transition-all cursor-pointer shrink-0 ${
+            className={`p-1.5 rounded-xl transition-all cursor-pointer shrink-0 ${
               inputPrompt.trim() && !isLoading
-                ? 'bg-[#129CD5] text-white hover:bg-[#129CD5]/90 hover:scale-105'
+                ? 'bg-[#129CD5] text-white hover:bg-[#129CD5]/90'
                 : 'bg-gray-100 text-gray-400 cursor-not-allowed'
             }`}
           >
-            <Send className="w-4 h-4" />
+            <Send className="w-3.5 h-3.5" />
           </button>
         </form>
       </div>
 
-      <div className="mt-3 flex items-start gap-1 text-[10px] text-gray-500 italic max-w-full">
-        <Info className="w-3.5 h-3.5 text-blue-500 shrink-0 mt-0.5" />
-        <span>Try asking about Luxembourg\'s safety frameworks (like e-banking phishing, Post.lu or LuxTrust smishing, or Luxembourgish tutor questions). Responses are powered live and privately.</span>
+      <div className="mt-2.5 text-[10px] text-gray-400 font-medium text-center">
+        <span>🔒 Live session proxy. Real-time active anonymizer handles all inputs securely.</span>
       </div>
     </div>
   );
