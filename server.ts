@@ -40,7 +40,8 @@ async function startServer() {
   function generateLocalFallbackResponse(prompt: string, errorReason?: string): string {
     const p = prompt.toLowerCase();
     
-    const header = `🤖 **Digital Buddha Safe Simulation Mode**\n*(Note: The live upstream Gemini service responded with a transient error or is currently experiencing high demand. The Digital Buddha locally simulated sandbox has engaged to provide a simulated response so your learning flow is not interrupted!)*\n\n---\n\n`;
+    // Now kept empty as requested
+    const header = "";
 
     // 1. Luxembourgish Tutor
     if (p.includes("luxembourgish") || p.includes("moien") || p.includes("greeting") || p.includes("quiz")) {

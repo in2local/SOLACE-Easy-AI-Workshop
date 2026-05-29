@@ -106,8 +106,8 @@ export default function AIChatSandbox() {
   const generateFrontendFallbackResponse = (prompt: string): string => {
     const p = prompt.toLowerCase();
     
-    // Header explaining the local secure session fall-back
-    const header = `🤖 **Digital Buddha Safe Simulation Mode**\n*(Note: The live upstream Gemini service responded with an error or is experiencing temporary network routing latency. The Digital Buddha locally simulated sandbox has engaged to provide a safe, contextual response so your safety session is not interrupted!)*\n\n---\n\n`;
+    // Header explaining the local secure session fall-back (Now kept empty as requested)
+    const header = "";
 
     // 1. Luxembourgish Tutor
     if (p.includes("luxembourgish") || p.includes("moien") || p.includes("greeting") || p.includes("quiz") || p.includes("language")) {
