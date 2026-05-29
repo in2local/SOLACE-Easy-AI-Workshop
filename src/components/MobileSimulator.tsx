@@ -268,7 +268,7 @@ export default function MobileSimulator() {
 
         {/* Right column: Physical Phone Frame Mockup */}
         <div className="lg:col-span-7 flex justify-center">
-          <div className="relative w-[340px] h-[680px] bg-slate-900 rounded-[50px] p-3.5 shadow-2xl border-4 border-slate-700 overflow-hidden ring-12 ring-slate-800">
+          <div className="relative z-10 w-[340px] h-[680px] bg-slate-900 rounded-[50px] p-3.5 shadow-2xl border-4 border-slate-700 overflow-hidden ring-12 ring-slate-800">
             
             {/* Phone Notch/Dynamic Island */}
             <div className="absolute top-6 left-1/2 -translate-x-1/2 w-32 h-6 bg-black rounded-full z-50 flex items-center justify-center ring-1 ring-slate-800">
