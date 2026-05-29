@@ -5,17 +5,39 @@ import "dotenv/config";
 
 function stripMarkdownElements(text: string): string {
   if (!text) return "";
-  return text
-    // Replace markdown headers (e.g., ### Title or # Title)
-    .replace(/^#+\s+/gm, "")
-    // Replace bold/italic symbols (e.g., **word**)
+  
+  // Split into individual lines to guarantee perfect matching across all platforms/OS newline conventions
+  const lines = text.split(/\r?\n/);
+  
+  const cleanedLines = lines.map(line => {
+    let l = line;
+    
+    // 1. Strip blockquote indicators from start: e.g. > some text
+    l = l.replace(/^\s*>\s*/, "");
+    
+    // 2. Strip headers from start: e.g. ### Title or # Title
+    l = l.replace(/^\s*#+\s*/, "");
+    
+    // 3. Strip unordered list bullets from start: e.g. * some text or - some text or + some text
+    l = l.replace(/^\s*[\*\-\+]\s+/, "• ");
+    
+    return l;
+  });
+  
+  let result = cleanedLines.join("\n");
+  
+  // 4. Strip inline markdown symbols anywhere globally
+  return result
+    // Remove all bold/italic markers (*** or ** or *)
     .replace(/\*{1,3}/g, "")
-    // Replace underscores styling
+    // Remove all underscores styling (__ or _)
     .replace(/_{1,3}/g, "")
-    // Replace inline code block ticks (e.g., `code`)
+    // Remove inline code accent marks (`)
     .replace(/`/g, "")
-    // Replace blockquote markers (e.g., > text) at the start of any line
-    .replace(/^\s*>\s+/gm, "");
+    // Remove any leftover blockquotes symbol (>)
+    .replace(/>/g, "")
+    // Remove strikethrough (~~)
+    .replace(/~/g, "");
 }
 
 async function startServer() {
