@@ -1,0 +1,6 @@
+{
+  "name": "SOLACE Digital Demo AI Workshop",
+  "description": "An interactive, gamified simulation and training platform for Luxembourg citizens. Complete scenarios, test your AI safety IQ, and inspect workshop toolkits completely offline and GDPR-compliantly.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
