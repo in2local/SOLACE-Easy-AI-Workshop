@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
-import { ShieldCheck, Laptop, Phone, Vote, BookOpen, Info } from 'lucide-react';
+import { ShieldCheck, Laptop, Phone, BookOpen, Info, Lock } from 'lucide-react';
 
-export type AppTab = 'laptop-sim' | 'mobile-sim' | 'ai-audit' | 'democracy-vote' | 'host-toolkit';
+export type AppTab = 'laptop-sim' | 'mobile-sim' | 'ai-audit' | 'host-toolkit' | 'privacy-insights';
 
 interface LayoutProps {
   children: ReactNode;
@@ -17,7 +17,7 @@ export default function Layout({ children, activeTab, setActiveTab, resetLaptopS
     { id: 'laptop-sim', label: 'Laptop Simulator', icon: <Laptop className="w-4 h-4" />, color: 'hover:text-[#E3232C]' },
     { id: 'mobile-sim', label: 'Smartphone Simulator', icon: <Phone className="w-4 h-4" />, color: 'hover:text-[#129CD5]' },
     { id: 'ai-audit', label: 'AI Safety Auditor', icon: <ShieldCheck className="w-4 h-4" />, color: 'hover:text-[#188C7C]' },
-    { id: 'democracy-vote', label: 'Democracy Ballot Box', icon: <Vote className="w-4 h-4" />, color: 'hover:text-[#C7652A]' },
+    { id: 'privacy-insights', label: 'Privacy Insights', icon: <Lock className="w-4 h-4" />, color: 'hover:text-[#188C7C]' },
     { id: 'host-toolkit', label: 'Facilitator Guide', icon: <BookOpen className="w-4 h-4" />, color: 'hover:text-[#74345E]' },
   ];
 
@@ -69,7 +69,7 @@ export default function Layout({ children, activeTab, setActiveTab, resetLaptopS
                     case 'laptop-sim': activeStyle = 'bg-[#E3232C]/10 text-[#E3232C] border-[#E3232C]'; break;
                     case 'mobile-sim': activeStyle = 'bg-[#129CD5]/10 text-[#129CD5] border-[#129CD5]'; break;
                     case 'ai-audit': activeStyle = 'bg-[#188C7C]/10 text-[#188C7C] border-[#188C7C]'; break;
-                    case 'democracy-vote': activeStyle = 'bg-[#C7652A]/10 text-[#C7652A] border-[#C7652A]'; break;
+                    case 'privacy-insights': activeStyle = 'bg-[#188C7C]/10 text-[#188C7C] border-[#188C7C]'; break;
                     case 'host-toolkit': activeStyle = 'bg-[#74345E]/10 text-[#74345E] border-[#74345E]'; break;
                   }
                 }

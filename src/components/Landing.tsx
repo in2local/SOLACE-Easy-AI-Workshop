@@ -31,7 +31,7 @@ export default function Landing({ onSelectAge }: LandingProps) {
     },
     { 
       id: 'professionals', 
-      label: 'Active Professionals (25-55)', 
+      label: 'Professionals (25-55)', 
       bgLabel: 'bg-[#188C7C] text-white',
       icon: <Briefcase className="w-8 h-8" />, 
       color: 'border-[#188C7C] hover:shadow-[#188C7C]/20',
@@ -70,7 +70,7 @@ export default function Landing({ onSelectAge }: LandingProps) {
 
       <div className="w-full">
         <h2 className="text-lg sm:text-xl font-bold text-center text-[#4A4036] mb-8 uppercase tracking-wider">
-          Select profile to customize laptop & browser simulation:
+          Select profile to play your simulation:
         </h2>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">

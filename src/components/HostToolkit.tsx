@@ -74,7 +74,7 @@ export default function HostToolkit() {
                 Crucial age to address political deepfake manipulation during communal/European elections.
               </div>
               <div className="bg-[#188C7C]/5 p-3 rounded-xl border border-[#188C7C]/10 text-gray-700">
-                <strong className="text-[#188C7C] block font-bold">Active Professionals (25-55)</strong>
+                <strong className="text-[#188C7C] block font-bold">Professionals (25-55)</strong>
                 High business email compromise (BEC) invoice redirections and private ledger leaks focus.
               </div>
               <div className="bg-[#C7652A]/5 p-3 rounded-xl border border-[#C7652A]/10 text-gray-700">

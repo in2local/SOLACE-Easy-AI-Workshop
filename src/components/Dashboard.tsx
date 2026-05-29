@@ -14,7 +14,7 @@ export default function Dashboard({ ageGroup, score, onStartSimulation, onReset 
     switch (ageGroup) {
       case 'explorers': return "Welcome, Explorer! Ready to learn organic digital security?";
       case 'digital-citizens': return "Hello Digital Citizen. Ready to defend democracy and your media ID?";
-      case 'professionals': return "Welcome, Active Professional. Secure your workflows & GDPR safety.";
+      case 'professionals': return "Welcome, Professional. Secure your workflows & GDPR safety.";
       case 'seniors': return "Welcome Senior Guardian. Let's guard your family against AI scams.";
     }
   };

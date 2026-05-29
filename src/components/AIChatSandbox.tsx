@@ -137,10 +137,27 @@ export default function AIChatSandbox() {
         })
       });
 
-      const data = await response.json();
+      let data: any = null;
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        try {
+          data = await response.json();
+        } catch (jsonErr) {
+          console.error('Failed to parse response as JSON:', jsonErr);
+        }
+      }
 
-      if (!response.ok || data.error) {
-        throw new Error(data.error || 'Server returned an error');
+      if (!response.ok) {
+        const errorMsg = data?.error || data?.message || await response.text() || `HTTP error! Status: ${response.status}`;
+        throw new Error(errorMsg);
+      }
+
+      if (!data) {
+        throw new Error('Received empty response from the server.');
+      }
+
+      if (data.error) {
+        throw new Error(data.error);
       }
 
       setMessages(prev => [...prev, {
@@ -217,7 +234,7 @@ export default function AIChatSandbox() {
               { id: 'all', label: 'All Cases' },
               { id: 'explorers', label: 'Youth Explorers' },
               { id: 'citizens', label: 'Digital Citizens' },
-              { id: 'professionals', label: 'Active Professionals' },
+              { id: 'professionals', label: 'Professionals' },
               { id: 'seniors', label: 'Senior Guardians' }
             ].map(tab => (
               <button
