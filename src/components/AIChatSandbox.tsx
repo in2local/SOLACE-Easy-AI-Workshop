@@ -107,11 +107,11 @@ export default function AIChatSandbox() {
     const p = prompt.toLowerCase();
     
     // Header explaining the local secure session fall-back
-    const header = `🤖 **SOLACE Secure Sandbox Mode**\n*(Note: The live upstream Gemini service responded with an error or is experiencing temporary network routing latency. Our smart local sandbox has temporarily engaged to provide a safe, contextual response so your session is not interrupted!)*\n\n---\n\n`;
+    const header = `🤖 **Digital Buddha Safe Simulation Mode**\n*(Note: The live upstream Gemini service responded with an error or is experiencing temporary network routing latency. The Digital Buddha locally simulated sandbox has engaged to provide a safe, contextual response so your safety session is not interrupted!)*\n\n---\n\n`;
 
     // 1. Luxembourgish Tutor
     if (p.includes("luxembourgish") || p.includes("moien") || p.includes("greeting") || p.includes("quiz") || p.includes("language")) {
-      return header + `Moien! As your SOLACE language guide, here is a beginner-friendly quiz to test simple Luxembourgish greetings and expressions!
+      return header + `Moien! As your Digital Buddha language guide, here is a beginner-friendly quiz to test simple Luxembourgish greetings and expressions!
       
 ### 🇱🇺 Basic Luxembourgish Quiz
 
@@ -140,7 +140,7 @@ export default function AIChatSandbox() {
 
     // 2. Spoofing / Grandchild Call Verification
     if (p.includes("grandchild") || p.includes("caller") || p.includes("scammer") || p.includes("phone") || p.includes("spoof")) {
-      return header + `### SOLACE Threat Advisory: Voice Spoofing & Vocal Clones
+      return header + `### Digital Buddha Threat Advisory: Voice Spoofing & Vocal Clones
 
 When receiving an unexpected call claiming to be from a grandchild, family member in distress, or bank official, **never rely on the voice alone**. AI voice cloning software can mimic any voice from a 3-second sample found on social media.
 
@@ -171,7 +171,7 @@ By replacing active identifiers, you prevent global models from mapping your per
 
     // 4. Unsecured Translation
     if (p.includes("jean dupont") || p.includes("matricule") || p.includes("1985 03 12 999 99") || p.includes("avenue de la gare") || p.includes("allocation")) {
-      return header + `⚠️ **[SOLACE SANDBOX - GDPR VIOLATION SIMULATED DETECTION]**
+      return header + `⚠️ **[DIGITAL BUDDHA - GDPR VIOLATION SIMULATED DETECTION]**
 
 Your prompt contains the following active personal identifiers:
 *   **Name:** Jean Dupont
@@ -218,7 +218,7 @@ Because you masked genuine enterprise clients with **XYZ** and **ABC** tokens, y
 
     // 7. General cybersecurity lookup (smishing, phishing, banking)
     if (p.includes("phishing") || p.includes("smishing") || p.includes("spam") || p.includes("luxtrust") || p.includes("scam") || p.includes("ebanking") || p.includes("cyber")) {
-      return header + `### 🛡️ SOLACE Luxembourg Cyber-Safety Alert: Phishing & E-Banking Scams
+      return header + `### 🛡️ Digital Buddha Luxembourg Cyber-Safety Alert: Phishing & E-Banking Scams
 
 Smishing (SMS Phishing) targeting users in Luxembourg remains highly frequent. Scammers often spoof local services like **Guichet.lu**, **Post.lu**, **Luxtrust**, or local banks (Spuerkeess, BIL, BGL).
 
@@ -233,9 +233,9 @@ Smishing (SMS Phishing) targeting users in Luxembourg remains highly frequent. S
     }
 
     // Default catch-all
-    return header + `### Moien! I am your SOLACE Digital AI Mentor.
+    return header + `### Moien! I am Digital Buddha, your AI safety guide.
 
-We have engaged **SOLACE Safe Local Playback Mode** due to high demand on our upstream AI engine or unconfigured keys. 
+We have engaged **Digital Buddha Safe Local Simulation Mode** due to high demand on our upstream AI engine or unconfigured keys. 
 
 While the servers clear up, here are **3 quick general guidelines** to keep your digital identity secure:
 
@@ -271,7 +271,7 @@ While the servers clear up, here are **3 quick general guidelines** to keep your
         },
         body: JSON.stringify({
           prompt: promptText,
-          systemInstruction: "You are SOLACE's Digital Mentor, a friendly AI specialized in teaching digital security, GDPR hygiene, and cyber-safety in Luxembourg. Be extremely concise, structured, and informative. Highlight when users ask about local topics (like Guichet.lu, Post.lu, Cactus, or Luxembourgish phrases) with helpful details. Frame explanations clearly."
+          systemInstruction: "You are Digital Buddha, your AI safety guide and privacy mentor specialized in teaching digital security, GDPR hygiene, and cyber-safety in Luxembourg. Be extremely concise, structured, and informative. Highlight when users ask about local topics (like Guichet.lu, Post.lu, Cactus, or Luxembourgish phrases) with helpful details. Frame explanations clearly."
         })
       });
 

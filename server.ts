@@ -40,11 +40,11 @@ async function startServer() {
   function generateLocalFallbackResponse(prompt: string, errorReason?: string): string {
     const p = prompt.toLowerCase();
     
-    const header = `🤖 **SOLACE Secure Sandbox Mode**\n*(Note: The live upstream Gemini service responded with a transient error or is currently experiencing high demand. Our smart local sandbox has temporarily engaged to provide a simulated response so your learning flow is not interrupted!)*\n\n---\n\n`;
+    const header = `🤖 **Digital Buddha Safe Simulation Mode**\n*(Note: The live upstream Gemini service responded with a transient error or is currently experiencing high demand. The Digital Buddha locally simulated sandbox has engaged to provide a simulated response so your learning flow is not interrupted!)*\n\n---\n\n`;
 
     // 1. Luxembourgish Tutor
     if (p.includes("luxembourgish") || p.includes("moien") || p.includes("greeting") || p.includes("quiz")) {
-      return header + `Moien! As your SOLACE language guide, here is a beginner-friendly quiz to test simple Luxembourgish greetings and expressions!
+      return header + `Moien! As your Digital Buddha language guide, here is a beginner-friendly quiz to test simple Luxembourgish greetings and expressions!
       
 ### 🇱🇺 Basic Luxembourgish Quiz
 
@@ -73,7 +73,7 @@ async function startServer() {
 
     // 2. Spoofing / Grandchild Call Verification
     if (p.includes("grandchild") || p.includes("caller") || p.includes("scammer") || p.includes("phone") || p.includes("spoof")) {
-      return header + `### SOLACE Threat Advisory: Voice Spoofing & Vocal Clones
+      return header + `### Digital Buddha Threat Advisory: Voice Spoofing & Vocal Clones
 
 When receiving an unexpected call claiming to be from a grandchild, family member in distress, or bank official, **never rely on the voice alone**. AI voice cloning software can mimic any voice from a 3-second sample found on social media.
 
@@ -104,7 +104,7 @@ By replacing active identifiers, you prevent global models from mapping your per
 
     // 4. Unsecured Translation
     if (p.includes("jean dupont") || p.includes("matricule") || p.includes("1985 03 12 999 99") || p.includes("avenue de la gare")) {
-      return header + `⚠️ **[SOLACE SANDBOX - GDPR VIOLATION SIMULATED DETECTION]**
+      return header + `⚠️ **[DIGITAL BUDDHA - GDPR VIOLATION SIMULATED DETECTION]**
 
 Your prompt contains the following active personal identifiers:
 *   **Name:** Jean Dupont
@@ -151,7 +151,7 @@ Because you masked genuine enterprise clients with **XYZ** and **ABC** tokens, y
 
     // 7. General cybersecurity lookup (smishing, phishing, banking)
     if (p.includes("phishing") || p.includes("smishing") || p.includes("spam") || p.includes("luxtrust") || p.includes("scam") || p.includes("ebanking")) {
-      return header + `### 🛡️ SOLACE Luxembourg Cyber-Safety Alert: Phishing & E-Banking Scams
+      return header + `### 🛡️ Digital Buddha Luxembourg Cyber-Safety Alert: Phishing & E-Banking Scams
 
 Smishing (SMS Phishing) targeting users in Luxembourg remains highly frequent. Scammers often spoof local services like **Guichet.lu**, **Post.lu**, **Luxtrust**, or local banks (Spuerkeess, BIL, BGL).
 
@@ -166,9 +166,9 @@ Smishing (SMS Phishing) targeting users in Luxembourg remains highly frequent. S
     }
 
     // Default catch-all
-    return header + `### Moien! I am your SOLACE Digital AI Mentor.
+    return header + `### Moien! I am Digital Buddha, your AI safety guide.
 
-We have engaged **SOLACE Safe Local Playback Mode** due to high demand on our upstream AI engine or unconfigured keys. 
+We have engaged **Digital Buddha Safe Local Simulation Mode** due to high demand on our upstream AI engine or unconfigured keys. 
 
 While the servers clear up, here are **3 quick general guidelines** to keep your digital identity secure:
 
@@ -203,7 +203,7 @@ While the servers clear up, here are **3 quick general guidelines** to keep your
               model: "gemini-3.5-flash",
               contents: prompt,
               config: {
-                systemInstruction: systemInstruction || "You are SOLACE's Digital Mentor and AI Safety guide, specializing in cybersecurity, privacy, civic security, and digital safety in Luxembourg.",
+                systemInstruction: systemInstruction || "You are Digital Buddha, your AI safety guide and privacy mentor, specializing in cybersecurity, privacy, civic security, and digital safety in Luxembourg.",
                 temperature: 0.7,
               },
             });
@@ -214,7 +214,7 @@ While the servers clear up, here are **3 quick general guidelines** to keep your
             if (!textResponse && response.candidates?.[0]?.finishReason) {
               const reason = response.candidates[0].finishReason;
               if (reason === "SAFETY" || reason === "RECITATION") {
-                textResponse = `⚠️ **[Simulation Blocked]** The prompt triggered safety filters on the server (Reason: ${reason}). Under SOLACE's GDPR training principles, this mimics a system block where private credentials, real Matrikkels, or personal data are fed to external models. Redact active identifiers and try again!`;
+                textResponse = `⚠️ **[Simulation Blocked]** The prompt triggered safety filters on the server (Reason: ${reason}). Under Digital Buddha's GDPR training principles, this mimics a system block where private credentials, real Matrikkels, or personal data are fed to external models. Redact active identifiers and try again!`;
               } else {
                 textResponse = `⚠️ **[System Stopped]** The model can't reply back fully. (Reason: ${reason}).`;
               }
@@ -229,7 +229,7 @@ While the servers clear up, here are **3 quick general guidelines** to keep your
               model: "gemini-3.1-flash-lite",
               contents: prompt,
               config: {
-                systemInstruction: systemInstruction || "You are SOLACE's Digital Mentor and AI Safety guide, specializing in cybersecurity, privacy, civic security, and digital safety in Luxembourg.",
+                systemInstruction: systemInstruction || "You are Digital Buddha, your AI safety guide and privacy mentor, specializing in cybersecurity, privacy, civic security, and digital safety in Luxembourg.",
                 temperature: 0.7,
               },
             });
@@ -240,7 +240,7 @@ While the servers clear up, here are **3 quick general guidelines** to keep your
             if (!textResponse && response.candidates?.[0]?.finishReason) {
               const reason = response.candidates[0].finishReason;
               if (reason === "SAFETY" || reason === "RECITATION") {
-                textResponse = `⚠️ **[Simulation Blocked]** The prompt triggered safety filters on the server (Reason: ${reason}). Under SOLACE's GDPR training principles, this mimics a system block where private credentials, real Matrikkels, or personal data are fed to external models. Redact active identifiers and try again!`;
+                textResponse = `⚠️ **[Simulation Blocked]** The prompt triggered safety filters on the server (Reason: ${reason}). Under Digital Buddha's GDPR training principles, this mimics a system block where private credentials, real Matrikkels, or personal data are fed to external models. Redact active identifiers and try again!`;
               } else {
                 textResponse = `⚠️ **[System Stopped]** The model can't reply back fully. (Reason: ${reason}).`;
               }
