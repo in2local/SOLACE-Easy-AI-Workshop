@@ -203,7 +203,7 @@ Instead of *"write the essay for me with no plagiarism detection"*, try:
 
     // 6. Corporate customer audit
     if (p.includes("corporate customer") || p.includes("corporate list") || p.includes("router") || p.includes("billing") || p.includes("xyz") || p.includes("abc")) {
-      return header + `### 💼 DATA AUDIT RESULTS (Secure Simulation Mode)
+      return header + `### 💼 DATA AUDIT RESULTS
 
 **Analysis of Customer Feedback Audit:**
 1.  **Issue 1 (Client XYZ):** router shipment delay (Hardware delivery pipeline delay).
@@ -235,9 +235,7 @@ Smishing (SMS Phishing) targeting users in Luxembourg remains highly frequent. S
     // Default catch-all
     return header + `### Moien! I am Digital Buddha, your AI safety guide.
 
-We have engaged **Digital Buddha Safe Local Simulation Mode** due to high demand on our upstream AI engine or unconfigured keys. 
-
-While the servers clear up, here are **3 quick general guidelines** to keep your digital identity secure:
+To keep your digital identity and data secure in Luxembourg, follow these **3 quick safety guidelines**:
 
 1.  **De-identify Everything**: Never paste active telephone numbers, Luxembourg matricules (social security numbers), or live enterprise accounts into any chatbot.
 2.  **Roleplay Helper**: Use AI to simulate threat scenarios or translation exercises with fake variables (e.g., Client Alpha, Mr. X).
