@@ -57,6 +57,89 @@ function stripMarkdownElements(text: string): string {
     .replace(/~/g, "");
 }
 
+function checkGDPRViolation(promptText: string): { violated: boolean; categories: string[] } {
+  const p = promptText.toLowerCase();
+  const categories: string[] = [];
+
+  // 1. Email Check
+  const emailMatches = promptText.match(/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/g) || [];
+  const realEmails = emailMatches.filter(email => {
+    const e = email.toLowerCase();
+    return !e.includes("censored") && !e.includes("placeholder") && !e.includes("email]");
+  });
+  if (realEmails.length > 0) {
+    categories.push(`Email Address: "${realEmails[0]}"`);
+  }
+
+  // 2. Phone / Mobile check
+  const phoneRegex = /(?:\+352|00352)\s?[26]\d(?:\s?\d{2}){3,4}|\b[26]\d(?:\s?\d{2}){3,4}\b|\b\+?[1-9]\d{1,3}[\s-]?\d{3,4}[\s-]?\d{4}\b/g;
+  const phoneMatches = promptText.match(phoneRegex) || [];
+  const realPhones = phoneMatches.filter(phone => {
+    const ph = phone.replace(/[\s-]/g, "");
+    if (ph.length < 8) return false;
+    if (ph.includes("12948")) return false;
+    if (/^[0-9]+$/.test(ph) && (ph.startsWith("19") || ph.startsWith("20")) && ph.length === 8) return false;
+    return true;
+  });
+  if (realPhones.length > 0) {
+    categories.push(`Phone/Mobile Number: "${realPhones[0]}"`);
+  }
+
+  // 3. National ID Matricule
+  const matriculeRegex = /\b(?:19|20)\d{2}\s?(?:0[1-9]|1[0-2])\s?(?:0[1-9]|[12]\d|3[01])\s?\d{3}\s?\d{2}\b|\b(?:19|20)\d{11}\b|\b\d{4}\s?\d{2}\s?\d{2}\s?\d{5}\b/g;
+  const matriculeMatches = promptText.match(matriculeRegex) || [];
+  if (matriculeMatches.length > 0) {
+    categories.push(`Luxembourg National ID (Matricule): "${matriculeMatches[0]}"`);
+  }
+
+  // 4. Banking IBAN or Credit Card
+  const ibanRegex = /\bLU\d{2}\s?\d{4}\s?\d{4}\s?\d{4}\s?\d{4}\b|\bLU\d{18}\b|\b[A-Z]{2}\d{2}[A-Z0-9\s-]{12,28}\b/gi;
+  const ibanMatches = promptText.match(ibanRegex) || [];
+  const realIbans = ibanMatches.filter(iban => {
+    const ib = iban.toUpperCase().replace(/[\s-]/g, "");
+    return !ib.includes("CENSORED") && !ib.includes("PLACEHOLDER");
+  });
+  if (realIbans.length > 0) {
+    categories.push(`International Bank Account Number (IBAN): "${realIbans[0]}"`);
+  }
+
+  const cardRegex = /\b\d{4}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}\b/g;
+  const cardMatches = promptText.match(cardRegex) || [];
+  if (cardMatches.length > 0) {
+    categories.push(`Credit Card Details: "${cardMatches[0]}"`);
+  }
+
+  // 5. Physical addresses
+  const addressKeywords = ["avenue de", "rue de", "route d'", "boulevard de", "residing at", "résidant au", "residence", "résidence"];
+  const containsAddress = addressKeywords.some(keyword => p.includes(keyword)) && (p.includes("luxembourg") || /\b\d{4}\b/.test(p) || p.includes("gare") || p.includes("bains"));
+  if (containsAddress) {
+    const matchLine = promptText.split(/[,\n]/).find(line => 
+      addressKeywords.some(kw => line.toLowerCase().includes(kw))
+    );
+    categories.push(`Physical Residential Address: "${(matchLine || "Luxembourg Address").trim()}"`);
+  }
+
+  // 6. Real Names or Specific Personal Names
+  const nameKeywords = ["jean dupont", "jean-pierre", "dupont jean", "shashi"];
+  const hasSpecificName = nameKeywords.some(name => p.includes(name) && !p.includes(`[name_censored]`) && !p.includes(`[censored_name]`));
+  if (hasSpecificName) {
+    const matchedName = nameKeywords.find(name => p.includes(name));
+    categories.push(`Personally Identifiable Name (PII): "${matchedName ? matchedName.toUpperCase() : "Name Identifier"}"`);
+  }
+
+  // 7. Active Credentials or database connections
+  const credentialsKeywords = ["db_password", "database_url", "aws_secret", "postgres://", "mongodb://", "password="];
+  const containsCreds = credentialsKeywords.some(keyword => p.includes(keyword));
+  if (containsCreds) {
+    categories.push(`Active User Credentials or Connection Parameters`);
+  }
+
+  return {
+    violated: categories.length > 0,
+    categories
+  };
+}
+
 export default function AIChatSandbox() {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -296,6 +379,30 @@ To keep your digital identity and data secure in Luxembourg, follow these **3 qu
     setMessages(prev => [...prev, newUserMessage]);
     setInputPrompt('');
     setIsLoading(true);
+
+    // GDPR / PII Local Active Interception
+    const gdprCheck = checkGDPRViolation(promptText);
+    if (gdprCheck.violated) {
+      setTimeout(() => {
+        const categoriesList = gdprCheck.categories.map(c => `• ${c}`).join('\n');
+        setMessages(prev => [...prev, {
+          id: 'reply-' + Date.now(),
+          sender: 'assistant',
+          text: `⚠️ **[GDPR VIOLATION PREVENTED - TRANSMISSION TERMINATED]**
+
+Under the General Data Protection Regulation (GDPR) and the Grand Duchy of Luxembourg’s strict security compliance policies, submitting raw personal identifier records to public or non-sanctioned AI servers is strictly prohibited. The system has successfully intercepted and neutralized your request to prevent compliance audit failures and direct data exposure.
+
+**Blocked Personally Identifiable Information (PII) elements:**
+${categoriesList}
+
+**💡 Secure Action Required:**
+Before resubmitting, you must sanitize your input. Please redact any active names, Matricules ( Luxembourgish social security numbers), detailed addresses, email addresses, phone/mobile numbers, or API keys. Replace their values with safe generic placeholder variables (e.g. \`[CENSORED_NAME]\`, \`[MATRIC_CENSORED]\`) and try again!`,
+          timestamp: new Date()
+        }]);
+        setIsLoading(false);
+      }, 700);
+      return;
+    }
 
     try {
       // API call to custom Express backend

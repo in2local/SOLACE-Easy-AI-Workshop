@@ -126,7 +126,7 @@ export default function Layout({ children, activeTab, setActiveTab, resetLaptopS
             </p>
           </div>
           
-          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mt-2">
+          <div className="flex flex-col items-center gap-2 mt-2">
             <div className="flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-[#FAF7EE]">
               <span>Made in Luxembourg</span>
               <div className="flex items-center gap-0.5">
@@ -135,6 +135,9 @@ export default function Layout({ children, activeTab, setActiveTab, resetLaptopS
                 <span className="w-3.5 h-2 bg-[#129CD5] rounded-xs inline-block" title="Blue"></span>
               </div>
             </div>
+            <p className="text-xs text-[#D2C8BC] font-mono mt-2 select-all">
+              Contact Email: shashi.iimc09@gmail.com Mobile: +352 621969162
+            </p>
           </div>
         </div>
       </footer>
