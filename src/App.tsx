@@ -5,7 +5,6 @@ import Dashboard from './components/Dashboard';
 import Simulation from './components/Simulation';
 import MobileSimulator from './components/MobileSimulator';
 import AISafetyAuditor from './components/AISafetyAuditor';
-import HostToolkit from './components/HostToolkit';
 import PrivacyInsights from './components/PrivacyInsights';
 import { AgeGroup } from './data/content';
 
@@ -91,11 +90,6 @@ export default function App() {
       {/* 5. Privacy Insights Compliance Tab */}
       {activeTab === 'privacy-insights' && (
         <PrivacyInsights />
-      )}
-
-      {/* 6. Facilitator/Host Toolkit Guide */}
-      {activeTab === 'host-toolkit' && (
-        <HostToolkit />
       )}
     </Layout>
   );

@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { ShieldCheck, Laptop, Phone, BookOpen, Info, Lock } from 'lucide-react';
 
-export type AppTab = 'laptop-sim' | 'mobile-sim' | 'ai-audit' | 'host-toolkit' | 'privacy-insights';
+export type AppTab = 'laptop-sim' | 'mobile-sim' | 'ai-audit' | 'privacy-insights';
 
 interface LayoutProps {
   children: ReactNode;
@@ -18,7 +18,6 @@ export default function Layout({ children, activeTab, setActiveTab, resetLaptopS
     { id: 'mobile-sim', label: 'Smartphone Simulator', icon: <Phone className="w-4 h-4" />, color: 'hover:text-[#129CD5]' },
     { id: 'ai-audit', label: 'AI Safety Auditor', icon: <ShieldCheck className="w-4 h-4" />, color: 'hover:text-[#188C7C]' },
     { id: 'privacy-insights', label: 'Privacy Insights', icon: <Lock className="w-4 h-4" />, color: 'hover:text-[#188C7C]' },
-    { id: 'host-toolkit', label: 'Facilitator Guide', icon: <BookOpen className="w-4 h-4" />, color: 'hover:text-[#74345E]' },
   ];
 
   return (
@@ -70,7 +69,6 @@ export default function Layout({ children, activeTab, setActiveTab, resetLaptopS
                     case 'mobile-sim': activeStyle = 'bg-[#129CD5]/10 text-[#129CD5] border-[#129CD5]'; break;
                     case 'ai-audit': activeStyle = 'bg-[#188C7C]/10 text-[#188C7C] border-[#188C7C]'; break;
                     case 'privacy-insights': activeStyle = 'bg-[#188C7C]/10 text-[#188C7C] border-[#188C7C]'; break;
-                    case 'host-toolkit': activeStyle = 'bg-[#74345E]/10 text-[#74345E] border-[#74345E]'; break;
                   }
                 }
 
